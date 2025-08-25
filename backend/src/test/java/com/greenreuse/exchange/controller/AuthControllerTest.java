@@ -13,6 +13,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class AuthControllerTest {
+    @Test
+    void login_shouldReturnBadRequestForMissingBody() throws Exception {
+        mockMvc.perform(post("/api/auth/login")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void login_shouldReturnUnauthorizedForInvalidCredentials() throws Exception {
+        String invalidJson = "{\"email\":\"wrong@example.com\",\"password\":\"wrongpass\"}";
+        mockMvc.perform(post("/api/auth/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(invalidJson))
+                .andExpect(status().isUnauthorized());
+    }
+
+    // Add more tests for successful login and forbidden access if you have a test
+    // user and token setup
 
     @Autowired
     private MockMvc mockMvc;

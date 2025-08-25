@@ -23,4 +23,32 @@ public class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isUnauthorized());
     }
+
+    @Test
+    void getDashboard_shouldReturnUnauthorizedIfNotLoggedIn() throws Exception {
+        mockMvc.perform(get("/api/user/dashboard")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void getPostedItems_shouldReturnUnauthorizedIfNotLoggedIn() throws Exception {
+        mockMvc.perform(get("/api/user/posted-items")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void getClaimedItems_shouldReturnUnauthorizedIfNotLoggedIn() throws Exception {
+        mockMvc.perform(get("/api/user/claimed-items")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void getUserItems_shouldReturnUnauthorizedIfNotLoggedIn() throws Exception {
+        mockMvc.perform(get("/api/user/items")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized());
+    }
 }

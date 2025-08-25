@@ -24,4 +24,32 @@ public class ItemControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    void getItemById_shouldReturnNotFoundForInvalidId() throws Exception {
+        mockMvc.perform(get("/api/items/99999")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void getItemsByCategory_shouldReturnOk() throws Exception {
+        mockMvc.perform(get("/api/items/category/OTHER")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void getItemsByLocation_shouldReturnOk() throws Exception {
+        mockMvc.perform(get("/api/items/location/Unknown")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void createItem_shouldReturnUnauthorizedIfNotLoggedIn() throws Exception {
+        mockMvc.perform(get("/api/items/create")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized());
+    }
 }
