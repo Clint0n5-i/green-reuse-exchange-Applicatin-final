@@ -1,8 +1,15 @@
 # Multi-stage build for smaller image
 FROM eclipse-temurin:17-jdk-alpine as builder
+
+# Install necessary tools
+RUN apk add --no-cache bash
+
 WORKDIR /app
 COPY . .
-RUN ./mvnw clean package -DskipTests
+
+# Make mvnw executable and run build
+RUN chmod +x mvnw && \
+    ./mvnw clean package -DskipTests
 
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
